@@ -9,11 +9,11 @@ import UIKit
 
 class TweetTableViewCell: UITableViewCell {
     
-    static let identifier = "TweetTableViewCell"
+    static let identifier = "TweetTableViewCell" //Using for regist the cell in table view
     
-    private let avatarImageView: UIImageView = {
+    private let avatarImageView: UIImageView = { //avatar of user
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false //unactivate auto layout
         imageView.contentMode = .scaleAspectFit
         imageView.layer.cornerRadius = 25 //make image view circular
         imageView.layer.masksToBounds = true
@@ -47,7 +47,7 @@ class TweetTableViewCell: UITableViewCell {
         return label
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { //init()
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(displayNameLabel)
@@ -56,7 +56,8 @@ class TweetTableViewCell: UITableViewCell {
         configureConstraints()
     }
     
-    private func configureConstraints() {
+    private func configureConstraints() { /*configure the constraints of the ui image,
+        custom the layout fully,managed by array*/
         let avatarImageViewConstraints = [
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 14),
