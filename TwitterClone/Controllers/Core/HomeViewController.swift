@@ -27,15 +27,36 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { //add tableview at Homeview
         return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetTableViewCell.identifier, for: indexPath) as?   TweetTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TweetTableViewCell.identifier, for: indexPath) as?   TweetTableViewCell //cast optionally
         else {
             return UITableViewCell()
         }
+        cell.delegate = self
         return cell
-    }    
+    }
+}
+
+extension HomeViewController: TweetTableViewCellDelegate { //implement TweetTableViewCellDelegate
+    func tweetTableViewCellDidTapReply() {
+        print("1")
+    }
+    
+    func tweetTableViewCellDidTapRetweet() {
+        print("2")
+    }
+    
+    func tweetTableViewCellDidTapLike() {
+        print("3")
+    }
+    
+    func tweetTableViewCellDidTapShare() {
+        print("4")
+    }
+    
+    
 }
