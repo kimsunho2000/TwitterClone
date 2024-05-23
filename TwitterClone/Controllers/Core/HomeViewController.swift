@@ -9,6 +9,18 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    private func configureNavigationBar() {  //add NavigationBar
+        let size : CGFloat = 36
+        let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        logoImageView.contentMode = .scaleAspectFill
+        logoImageView.image = UIImage(named: "twitterLogo") //image located Assets
+        
+        let middleView = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size)) //located in middle of navigationBar
+        middleView.addSubview(logoImageView)
+        
+        navigationItem.titleView = middleView
+    }
+    
     private let timelineTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TweetTableViewCell.self, forCellReuseIdentifier: TweetTableViewCell.identifier)
@@ -19,6 +31,7 @@ class HomeViewController: UIViewController {
         view.addSubview(timelineTableView)
         timelineTableView.delegate = self
         timelineTableView.dataSource = self
+        configureNavigationBar()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -57,6 +70,5 @@ extension HomeViewController: TweetTableViewCellDelegate { //implement TweetTabl
     func tweetTableViewCellDidTapShare() {
         print("4")
     }
-    
-    
+
 }
