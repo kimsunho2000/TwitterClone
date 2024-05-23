@@ -19,7 +19,14 @@ class HomeViewController: UIViewController {
         middleView.addSubview(logoImageView)
         
         navigationItem.titleView = middleView
+    
+        let profileImage = UIImage(systemName: "person") //located in left of navigationBar
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: profileImage, style: .plain, target: self, action: #selector(didTapProfile))
     }
+    
+    @objc private func didTapProfile() {
+        let vc = ProfileViewController()
+        navigationController?.pushViewController(vc, animated: true)    }
     
     private let timelineTableView: UITableView = {
         let tableView = UITableView()
