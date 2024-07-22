@@ -20,6 +20,7 @@
 		D8125BF92C4CC8150091CFBD /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF82C4CC8150091CFBD /* FirebaseStorageCombine-Community */; };
 		D8125BFC2C4CCAE60091CFBD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */; };
 		D8125BFE2C4CE9210091CFBD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */; };
+		D8125C012C4E359D0091CFBD /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125C002C4E359D0091CFBD /* RegisterViewViewModel.swift */; };
 		D853F4D82C01C4CE003C9459 /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D853F4D72C01C4CE003C9459 /* ProfileTableViewHeader.swift */; };
 		D8C3DF352BF9EAFE004BEE85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3DF342BF9EAFE004BEE85 /* AppDelegate.swift */; };
 		D8C3DF372BF9EAFE004BEE85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3DF362BF9EAFE004BEE85 /* SceneDelegate.swift */; };
@@ -58,6 +59,7 @@
 		D8125BE52C4CC5370091CFBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		D8125C002C4E359D0091CFBD /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
 		D853F4D72C01C4CE003C9459 /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
 		D8C3DF312BF9EAFE004BEE85 /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C3DF342BF9EAFE004BEE85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,6 +131,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		D8125BFF2C4E34730091CFBD /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D8125C002C4E359D0091CFBD /* RegisterViewViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		D8C3DF282BF9EAFE004BEE85 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +162,7 @@
 		D8C3DF332BF9EAFE004BEE85 /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				D8125BFF2C4E34730091CFBD /* ViewModels */,
 				D8C874E12BFB7BD100B2FE04 /* Views */,
 				D8C3DF642BFA3E99004BEE85 /* Controllers */,
 				D8C3DF342BF9EAFE004BEE85 /* AppDelegate.swift */,
@@ -364,6 +375,7 @@
 				D8C3DF6B2BFA3F1F004BEE85 /* NotificationsViewController.swift in Sources */,
 				D8C3DF372BF9EAFE004BEE85 /* SceneDelegate.swift in Sources */,
 				D8C3DF672BFA3EFE004BEE85 /* HomeViewController.swift in Sources */,
+				D8125C012C4E359D0091CFBD /* RegisterViewViewModel.swift in Sources */,
 				D80547B02BFF47F00086EF19 /* ProfileViewController.swift in Sources */,
 				D8C3DF6D2BFA3F2D004BEE85 /* DirectMessagesViewController.swift in Sources */,
 				D853F4D82C01C4CE003C9459 /* ProfileTableViewHeader.swift in Sources */,
