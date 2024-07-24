@@ -6,12 +6,8 @@
 //
 
 import UIKit
-import Combine
 
 class RegisterViewController: UIViewController {
-    
-    private var viewModel = RegisterViewViewModel()
-    private var subscriptions: Set<AnyCancellable> = []
     
     private let registerTitleLabel: UILabel = {
         
@@ -52,10 +48,10 @@ class RegisterViewController: UIViewController {
         button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha:  1)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 25
-        button.isEnabled = false
         return button
     }()
     
+<<<<<<< HEAD
     @objc private func didChangeEmailField() {
         viewModel.email = emailTextField.text
         viewModel.validateRegistrationForm()
@@ -83,6 +79,8 @@ class RegisterViewController: UIViewController {
         view.endEditing(true)
     }
     
+=======
+>>>>>>> parent of 52e79c1 (add RegisterViewViewModels for MVVM design pattern and script login system with regex and combine framework(async))
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -92,8 +90,6 @@ class RegisterViewController: UIViewController {
         view.addSubview(registerButton)
         registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         ConfigureConstratins()
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDidmiss))) //gesture eventlistener
-        bindViews()
     }
     
     @objc private func didTapRegister() {
