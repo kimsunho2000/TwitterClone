@@ -72,6 +72,7 @@ class RegisterViewController: UIViewController {
         viewModel.$isRegistrationFormValid.sink { [weak self] validationState in
             self?.registerButton.isEnabled = validationState //binding crossed data between views and datamodels
         }
+        .store(in: &subscriptions)
           
         viewModel.$user.sink { [weak self] user in
             print(user)
