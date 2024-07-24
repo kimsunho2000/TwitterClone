@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Firebase
+import Combine
 
 //ViewModel handle all the logic for the views it self(MVVM)
 
@@ -14,6 +16,9 @@ final class RegisterViewViewModel: ObservableObject { //Observe instances of cla
     @Published var email: String?
     @Published var password: String?
     @Published var isRegistrationFormValid: Bool = false
+    @Published var user: User?
+    
+    private var subscriptions: Set<AnyCancellable> = []
     
     func validateRegistrationForm() { //bind to register button
         guard let email = email,
@@ -29,6 +34,17 @@ final class RegisterViewViewModel: ObservableObject { //Observe instances of cla
 
         let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailPred.evaluate(with: email)
+    }
+    
+    func createUser() { //create User
+        guard let email = email,
+              let password = password else { return }
+        AuthManager.shared.registerUser(with: email, password: password)
+            .sink { _ in
+            } receiveValue : { [weak self] user in //prevent strong reference cycle
+                self?.user = user
+            }
+            .store(in: &subscriptions)
     }
 }
 

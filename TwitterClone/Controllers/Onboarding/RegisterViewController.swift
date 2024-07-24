@@ -72,6 +72,10 @@ class RegisterViewController: UIViewController {
         viewModel.$isRegistrationFormValid.sink { [weak self] validationState in
             self?.registerButton.isEnabled = validationState //binding crossed data between views and datamodels
         }
+          
+        viewModel.$user.sink { [weak self] user in
+            print(user)
+        }
         .store(in: &subscriptions)
     }
     
@@ -86,9 +90,14 @@ class RegisterViewController: UIViewController {
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
+        registerButton.addTarget(self, action: #selector(didTapRegister), for: .touchUpInside)
         ConfigureConstratins()
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToDidmiss))) //gesture eventlistener
         bindViews()
+    }
+    
+    @objc private func didTapRegister() {
+        viewModel.createUser()
     }
 
     private func ConfigureConstratins(){

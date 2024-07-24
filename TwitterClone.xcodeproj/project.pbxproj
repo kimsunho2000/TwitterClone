@@ -21,6 +21,7 @@
 		D8125BFC2C4CCAE60091CFBD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */; };
 		D8125BFE2C4CE9210091CFBD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */; };
 		D8125C012C4E359D0091CFBD /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125C002C4E359D0091CFBD /* RegisterViewViewModel.swift */; };
+		D8125C042C50CABF0091CFBD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125C032C50CABF0091CFBD /* AuthManager.swift */; };
 		D853F4D82C01C4CE003C9459 /* ProfileTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D853F4D72C01C4CE003C9459 /* ProfileTableViewHeader.swift */; };
 		D8C3DF352BF9EAFE004BEE85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3DF342BF9EAFE004BEE85 /* AppDelegate.swift */; };
 		D8C3DF372BF9EAFE004BEE85 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C3DF362BF9EAFE004BEE85 /* SceneDelegate.swift */; };
@@ -60,6 +61,7 @@
 		D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		D8125C002C4E359D0091CFBD /* RegisterViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewViewModel.swift; sourceTree = "<group>"; };
+		D8125C032C50CABF0091CFBD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		D853F4D72C01C4CE003C9459 /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
 		D8C3DF312BF9EAFE004BEE85 /* TwitterClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C3DF342BF9EAFE004BEE85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		D8125C022C50CA6A0091CFBD /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D8125C032C50CABF0091CFBD /* AuthManager.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		D8C3DF282BF9EAFE004BEE85 = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +172,7 @@
 		D8C3DF332BF9EAFE004BEE85 /* TwitterClone */ = {
 			isa = PBXGroup;
 			children = (
+				D8125C022C50CA6A0091CFBD /* Networking */,
 				D8125BFF2C4E34730091CFBD /* ViewModels */,
 				D8C874E12BFB7BD100B2FE04 /* Views */,
 				D8C3DF642BFA3E99004BEE85 /* Controllers */,
@@ -369,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8125BFE2C4CE9210091CFBD /* RegisterViewController.swift in Sources */,
+				D8125C042C50CABF0091CFBD /* AuthManager.swift in Sources */,
 				D8C3DF692BFA3F10004BEE85 /* SearchViewController.swift in Sources */,
 				D8C3DF392BF9EAFE004BEE85 /* MainTabbarViewController.swift in Sources */,
 				D8C3DF352BF9EAFE004BEE85 /* AppDelegate.swift in Sources */,
