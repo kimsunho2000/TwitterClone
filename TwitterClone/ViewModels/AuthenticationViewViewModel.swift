@@ -40,6 +40,9 @@ final class RegisterViewViewModel: ObservableObject { //Observe instances of cla
         guard let email = email,
               let password = password else { return }
         AuthManager.shared.registerUser(with: email, password: password)
+            .handleEvents(receiveOutput: { [weak self] user in
+                self?.user = user
+            })
             .sink { _ in
             } receiveValue : { [weak self] user in //prevent strong reference cycle
                 self?.user = user
