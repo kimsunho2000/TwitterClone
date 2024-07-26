@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController { //add onboardingViewContorrler
+class OnboardingViewController: UIViewController { //add LoginViewContorrler
     
     private let welcomeLabel: UILabel = {
         
@@ -63,6 +63,7 @@ class OnboardingViewController: UIViewController { //add onboardingViewContorrle
         view.addSubview(loginButton)
         
         createAccountButton.addTarget(self, action: #selector(didTapCreateAccount), for: .touchUpInside) //add event listener
+        loginButton.addTarget(self, action: #selector(didTapLogin), for: .touchUpInside)
     
         configureConstraints()
     }
@@ -71,7 +72,12 @@ class OnboardingViewController: UIViewController { //add onboardingViewContorrle
         let vc = RegisterViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
-
+    
+    @objc private func didTapLogin () {
+        let vc = LoginViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func configureConstraints() {
         let welcomeLabelConstraints = [
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant:  20),

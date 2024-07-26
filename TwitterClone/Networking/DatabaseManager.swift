@@ -1,16 +1,27 @@
-//
-//  DatabaseMangager.swift
-//  TwitterClone
-//
-//  Created by 김선호 on 7/25/24.
-//
-
 import Foundation
 import Firebase
 import FirebaseFirestoreSwift
 import FirebaseFirestoreCombineSwift
+import Combine
 
-class DatabaseMangager {
+
+class DatabaseManager {
     
-    static let shared = DatabaseMangager
+    static let shared = DatabaseManager()
+    
+    
+    let db = Firestore.firestore()
+    let usersPath: String = "users"
+    let tweetsPath: String = "tweets"
+    
+    
+    
+    func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> {
+        let twitterUser = TwitterUser(from: user)
+        return db.collection(usersPath).document(twitterUser.id).setData(from: twitterUser) // install cocoapods and modified pods file
+            .map {
+                _ in return true
+            }
+            .eraseToAnyPublisher()
+    }
 }

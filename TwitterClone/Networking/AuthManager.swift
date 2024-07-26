@@ -19,6 +19,11 @@ class AuthManager { //singleton pattern
         return Auth.auth().createUser(withEmail: email, password: password)
             .map(\.user)
             .eraseToAnyPublisher()
-        
+    }
+    
+    func loginUser(with email : String, Password: String) -> AnyPublisher<User, Error> {
+        return Auth.auth().signIn(withEmail: email, password: Password)
+            .map(\.user)
+            .eraseToAnyPublisher()
     }
 }

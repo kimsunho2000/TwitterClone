@@ -11,22 +11,23 @@ import Combine
 
 //ViewModel handle all the logic for the views it self(MVVM)
 
-final class RegisterViewViewModel: ObservableObject { //Observe instances of classes and update the view when they change.
+final class AuthenticationViewViewModel: ObservableObject { //Observe instances of classes and update the view when they change.
     
     @Published var email: String?
     @Published var password: String?
-    @Published var isRegistrationFormValid: Bool = false
+    @Published var isAuthenticationFormValid: Bool = false
     @Published var user: User?
+    @Published var error: String?
     
     private var subscriptions: Set<AnyCancellable> = []
     
-    func validateRegistrationForm() { //bind to register button
+    func validateAuthenticationForm() { //bind to register button
         guard let email = email,
               let password = password else {
-            isRegistrationFormValid = false
+            isAuthenticationFormValid = false
             return
         }
-        isRegistrationFormValid = isValidEmail(email) && password.count >= 8
+        isAuthenticationFormValid = isValidEmail(email) && password.count >= 8
     }
     
     func isValidEmail(_ email: String) -> Bool { //referenced by stackoverflow
@@ -43,11 +44,35 @@ final class RegisterViewViewModel: ObservableObject { //Observe instances of cla
             .handleEvents(receiveOutput: { [weak self] user in
                 self?.user = user
             })
-            .sink { _ in
+            .sink { [weak self] completion in //error handler
+                
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+                
             } receiveValue : { [weak self] user in //prevent strong reference cycle
                 self?.user = user
             }
             .store(in: &subscriptions)
     }
-}
+    
+    func loginUser() { //login system
+        guard let email = email,
+              let password = password else { return }
+        AuthManager.shared.loginUser(with: email, Password: password)
+            .handleEvents(receiveOutput: { [weak self] user in
+                self?.user = user
+            })
+            .sink { [weak self] completion in //error handler
+                
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+                
+            } receiveValue : { [weak self] user in //prevent strong reference cycle
+                self?.user = user
+            }
+            .store(in: &subscriptions)
+    }
+} 
 
