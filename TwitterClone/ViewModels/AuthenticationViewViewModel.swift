@@ -51,8 +51,22 @@ final class AuthenticationViewViewModel: ObservableObject { //Observe instances 
                 }
                 
             } receiveValue : { [weak self] user in //prevent strong reference cycle
-                self?.user = user
+                self?.createRecord(for: user)
             }
+            .store(in: &subscriptions)
+    }
+    
+    func createRecord(for user: User) { //call collectionUsers(add: user) and do error handling or print state
+        DatabaseManager.shared.collectionUsers(add: user)
+            .sink {
+                [weak self] completion in
+                if case .failure(let error) = completion {
+                    self?.error = error.localizedDescription
+                }
+            }   receiveValue: {
+                state in
+                print("Adding user record to database: \(state)")
+                }
             .store(in: &subscriptions)
     }
     

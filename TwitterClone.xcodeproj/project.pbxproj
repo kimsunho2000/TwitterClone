@@ -19,7 +19,6 @@
 		D83D62382C536AFA00F26754 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BEE2C4CC8150091CFBD /* FirebaseDatabaseSwift */; };
 		D83D62392C536AFA00F26754 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF02C4CC8150091CFBD /* FirebaseFirestore */; };
 		D83D623A2C536AFA00F26754 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF22C4CC8150091CFBD /* FirebaseFirestoreCombine-Community */; };
-		D83D623B2C536AFA00F26754 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF42C4CC8150091CFBD /* FirebaseFirestoreSwift */; };
 		D83D623C2C536AFA00F26754 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF62C4CC8150091CFBD /* FirebaseStorage */; };
 		D83D623D2C536AFA00F26754 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BF82C4CC8150091CFBD /* FirebaseStorageCombine-Community */; };
 		D85312BC2C5372300048BB18 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D85312BB2C5372300048BB18 /* LoginViewController.swift */; };
@@ -109,7 +108,6 @@
 			files = (
 				D83D623D2C536AFA00F26754 /* FirebaseStorageCombine-Community in Frameworks */,
 				D83D623C2C536AFA00F26754 /* FirebaseStorage in Frameworks */,
-				D83D623B2C536AFA00F26754 /* FirebaseFirestoreSwift in Frameworks */,
 				D83D623A2C536AFA00F26754 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				D83D62392C536AFA00F26754 /* FirebaseFirestore in Frameworks */,
 				D83D62382C536AFA00F26754 /* FirebaseDatabaseSwift in Frameworks */,
@@ -274,7 +272,6 @@
 				D8125BEE2C4CC8150091CFBD /* FirebaseDatabaseSwift */,
 				D8125BF02C4CC8150091CFBD /* FirebaseFirestore */,
 				D8125BF22C4CC8150091CFBD /* FirebaseFirestoreCombine-Community */,
-				D8125BF42C4CC8150091CFBD /* FirebaseFirestoreSwift */,
 				D8125BF62C4CC8150091CFBD /* FirebaseStorage */,
 				D8125BF82C4CC8150091CFBD /* FirebaseStorageCombine-Community */,
 			);
@@ -841,11 +838,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D8125BE72C4CC8150091CFBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreCombine-Community";
-		};
-		D8125BF42C4CC8150091CFBD /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D8125BE72C4CC8150091CFBD /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
 		};
 		D8125BF62C4CC8150091CFBD /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
