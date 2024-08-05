@@ -45,7 +45,7 @@ class DatabaseManager {
         }
     }
     
-    func collectionUsers(retrieve id: String) -> AnyPublisher<TwitterUser, Error> { //search UID in firebasedatabse and transform data to TwitterUser type
+    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error> { //search UID in firebasedatabse and transform data to TwitterUser type
         Future<TwitterUser, Error> { promise in
             self.db.collection(self.usersPath).document(id).getDocument { document, error in
                 if let error = error {
