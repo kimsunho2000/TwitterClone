@@ -14,7 +14,7 @@ struct TwitterUser: Codable {
     var username: String = ""
     var followersCount: Int = 0
     var followingCount: Int = 0
-    var createdOn: Date = Date()
+    var createdOn: String
     var bio: String = ""
     var avatarPath: String = ""
     var isUserOnboarded: Bool = false
@@ -22,6 +22,13 @@ struct TwitterUser: Codable {
     
     init(from user: User) {
         self.id = user.uid
+        self.createdOn = TwitterUser.dateFormatter.string(from: Date())
     }
+    
+    static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            return formatter
+        }()
 }
 
