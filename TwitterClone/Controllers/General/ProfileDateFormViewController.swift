@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import PhotosUI
 
-class ProfileDateFormViewController: UIViewController {
+class ProfileDataFormViewController: UIViewController {
     
+
     private let scrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
@@ -68,7 +70,7 @@ class ProfileDateFormViewController: UIViewController {
         imageView.image = UIImage(systemName: "camera.fill")
         imageView.tintColor = .gray
         imageView.isUserInteractionEnabled = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -116,6 +118,16 @@ class ProfileDateFormViewController: UIViewController {
         bioTextView.delegate = self
         view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDidMiss)))
         configureConstraints()
+        avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpload))) //add event to upload photo
+    }
+    
+    @objc private func didTapToUpload() { //pop up phone gallery to upload photo
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1 //only choose one photo
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        present(picker, animated:  true)
     }
     
     @objc private func didTapToDidMiss() {
@@ -181,7 +193,7 @@ class ProfileDateFormViewController: UIViewController {
     
 }
     
-    extension ProfileDateFormViewController: UITextViewDelegate, UITextFieldDelegate{ //extension protocols
+    extension ProfileDataFormViewController: UITextViewDelegate, UITextFieldDelegate{ //extension protocols
         func textViewDidBeginEditing(_ textView: UITextView) {
             scrollView.setContentOffset(CGPoint(x: 0, y: textView.frame.origin.y - 100), animated: true)
             if textView.textColor == .gray {
@@ -200,5 +212,21 @@ class ProfileDateFormViewController: UIViewController {
         func textFieldDidBeginEditing(_ textField: UITextField) {
             scrollView.setContentOffset(CGPoint(x: 0, y: textField.frame.origin.y - 100), animated: true)
         }
+}
+
+extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        
+        for result in results {
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                if let image =  object as? UIImage {
+                    DispatchQueue.main.async { //use asynchronous to make task fast
+                        self?.avatarPlaceholderImageView.image = image
+                    }
+                }
+            }
+        }
+    }
 }
 

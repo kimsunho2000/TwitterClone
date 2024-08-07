@@ -76,7 +76,7 @@ class HomeViewController: UIViewController {
     }
     
     func completeUserOnboarding() {
-        let vc = ProfileDateFormViewController()
+        let vc = ProfileDataFormViewController()
         present(vc, animated: true)
     }
     
