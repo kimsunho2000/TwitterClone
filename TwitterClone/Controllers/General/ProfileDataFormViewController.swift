@@ -1,5 +1,5 @@
 //
-//  ProfileDateFormViewController.swift
+//  ProfileDataFormViewController.swift
 //  TwitterClone
 //
 //  Created by 김선호 on 8/5/24.
@@ -7,10 +7,14 @@
 
 import UIKit
 import PhotosUI
+import Combine
 
 class ProfileDataFormViewController: UIViewController {
     
-
+    private let viewModel = ProfileDataFormViewViewModel()
+    private var subscriptions: Set<AnyCancellable> = []
+    
+    
     private let scrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
@@ -119,6 +123,27 @@ class ProfileDataFormViewController: UIViewController {
         view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDidMiss)))
         configureConstraints()
         avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpload))) //add event to upload photo
+        bindViews()
+    }
+    
+    @objc func didUpdateDisplayName() {
+        viewModel.displayName = displayNameTextField.text
+        viewModel.validateUserProfileForm()
+    }
+    
+    @objc func didUpdateUsername() {
+        viewModel.username = usernameTextField.text
+        viewModel.validateUserProfileForm()
+    }
+    
+    private func bindViews() {
+        displayNameTextField.addTarget(self, action: #selector(didUpdateDisplayName), for: .editingChanged)
+        usernameTextField.addTarget(self, action: #selector(didUpdateUsername), for: .editingChanged)
+        viewModel.$isFormVaild.sink {
+            [weak self] buttonState in
+            self?.submitButton.isEnabled = buttonState
+        }
+        .store(in: &subscriptions)
     }
     
     @objc private func didTapToUpload() { //pop up phone gallery to upload photo
@@ -201,6 +226,10 @@ class ProfileDataFormViewController: UIViewController {
                 textView.text = ""
         }
     }
+
+        func textViewDidChange(_ textView: UITextView) {
+            viewModel.bio = textView.text
+        }
         
         func textViewDidEndEditing(_ textView: UITextView) {
             if textView.text.isEmpty {
@@ -223,6 +252,8 @@ extension ProfileDataFormViewController: PHPickerViewControllerDelegate {
                 if let image =  object as? UIImage {
                     DispatchQueue.main.async { //use asynchronous to make task fast
                         self?.avatarPlaceholderImageView.image = image
+                        self?.viewModel.imageData = image
+                        self?.viewModel.validateUserProfileForm()
                     }
                 }
             }
