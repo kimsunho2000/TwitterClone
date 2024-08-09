@@ -122,8 +122,13 @@ class ProfileDataFormViewController: UIViewController {
         bioTextView.delegate = self
         view.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(didTapToDidMiss)))
         configureConstraints()
+        submitButton.addTarget(self, action: #selector(didTapSubmit), for: .touchUpInside)
         avatarPlaceholderImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToUpload))) //add event to upload photo
         bindViews()
+    }
+    
+    @objc func didTapSubmit() {
+        viewModel.uploadAvatar()
     }
     
     @objc func didUpdateDisplayName() {

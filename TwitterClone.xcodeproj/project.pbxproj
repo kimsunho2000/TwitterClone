@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D80547B02BFF47F00086EF19 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D80547AF2BFF47F00086EF19 /* ProfileViewController.swift */; };
+		D809DE992C65E2E300821787 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D809DE982C65E2E300821787 /* StorageManager.swift */; };
 		D8125BE62C4CC5370091CFBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D8125BE52C4CC5370091CFBD /* GoogleService-Info.plist */; };
 		D8125BFC2C4CCAE60091CFBD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */; };
 		D8125BFE2C4CE9210091CFBD /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */; };
@@ -63,6 +64,7 @@
 
 /* Begin PBXFileReference section */
 		D80547AF2BFF47F00086EF19 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D809DE982C65E2E300821787 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		D8125BE52C4CC5370091CFBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D8125BFB2C4CCAE60091CFBD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		D8125BFD2C4CE9210091CFBD /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				D8125C032C50CABF0091CFBD /* AuthManager.swift */,
 				D8CF14B42C521F6B006CEC8C /* DatabaseManager.swift */,
+				D809DE982C65E2E300821787 /* StorageManager.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				D8125BFE2C4CE9210091CFBD /* RegisterViewController.swift in Sources */,
 				D8125C042C50CABF0091CFBD /* AuthManager.swift in Sources */,
 				D8C3DF692BFA3F10004BEE85 /* SearchViewController.swift in Sources */,
+				D809DE992C65E2E300821787 /* StorageManager.swift in Sources */,
 				D8C3DF392BF9EAFE004BEE85 /* MainTabbarViewController.swift in Sources */,
 				D8C3DF352BF9EAFE004BEE85 /* AppDelegate.swift in Sources */,
 				D8CF14B32C521C57006CEC8C /* TwitterUser.swift in Sources */,
