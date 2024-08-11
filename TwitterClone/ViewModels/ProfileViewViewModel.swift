@@ -1,15 +1,15 @@
 //
-//  HomeViewViewModel.swift
+//  ProfileViewViewModel.swift
 //  TwitterClone
 //
-//  Created by 김선호 on 8/2/24.
+//  Created by 김선호 on 8/11/24.
 //
 
 import Foundation
 import Combine
 import FirebaseAuth
 
-final class HomeViewViewModel: ObservableObject {
+final class ProfileViewViewModel: ObservableObject {
     
     @Published var user: TwitterUser?
     @Published var error: String?
@@ -28,5 +28,6 @@ final class HomeViewViewModel: ObservableObject {
                 self?.user = user
             }
             .store(in: &subscriptions)
+        
     }
 }

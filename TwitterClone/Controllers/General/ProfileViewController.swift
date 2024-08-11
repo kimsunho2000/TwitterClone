@@ -10,6 +10,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     private var isStatusBarHidden : Bool = true
+    private var viewModel = ProfileViewViewModel()
     
     private let statusBar : UIView = {
         let view = UIView()

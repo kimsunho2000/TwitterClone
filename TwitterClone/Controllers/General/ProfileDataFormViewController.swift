@@ -149,6 +149,14 @@ class ProfileDataFormViewController: UIViewController {
             self?.submitButton.isEnabled = buttonState
         }
         .store(in: &subscriptions)
+        
+        viewModel.$isOnboardingFinished.sink {
+            [weak self] success in
+            if success {
+                self?.dismiss(animated: true)
+            }
+        }
+        .store(in: &subscriptions)
     }
     
     @objc private func didTapToUpload() { //pop up phone gallery to upload photo
@@ -234,6 +242,7 @@ class ProfileDataFormViewController: UIViewController {
 
         func textViewDidChange(_ textView: UITextView) {
             viewModel.bio = textView.text
+            viewModel.validateUserProfileForm()
         }
         
         func textViewDidEndEditing(_ textView: UITextView) {

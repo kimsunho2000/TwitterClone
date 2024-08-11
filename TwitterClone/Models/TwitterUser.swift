@@ -25,7 +25,7 @@ struct TwitterUser: Codable {
         self.createdOn = TwitterUser.dateFormatter.string(from: Date())
     }
     
-    static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = { //transform Date() return value
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             return formatter
