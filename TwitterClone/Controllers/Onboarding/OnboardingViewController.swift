@@ -27,7 +27,7 @@ class OnboardingViewController: UIViewController { //add LoginViewContorrler
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Create Account", for: .normal)
-        button.backgroundColor = UIColor(red: 29/255, green: 161/255, blue: 242/255, alpha:  1)
+        button.backgroundColor = .twitterBlueColor
         button.layer.masksToBounds = true
         button.tintColor = .white
         button.layer.cornerRadius = 30

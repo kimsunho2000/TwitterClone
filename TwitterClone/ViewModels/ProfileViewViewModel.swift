@@ -28,6 +28,5 @@ final class ProfileViewViewModel: ObservableObject {
                 self?.user = user
             }
             .store(in: &subscriptions)
-        
     }
 }

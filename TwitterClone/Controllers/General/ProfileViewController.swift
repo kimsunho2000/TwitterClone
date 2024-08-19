@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController {
         viewModel.retreiveUser()
     }
     
-    private func bindViews() {
+    private func bindViews() { //binding views in app 
         viewModel.$user.sink { [weak self] user in
             guard let user = user else { return }
             self?.headerView.displayNameLabel.text = user.displayName
@@ -64,6 +64,7 @@ class ProfileViewController: UIViewController {
             self?.headerView.followingCountLabel.text = "\(user.followingCount)"
             self?.headerView.userBioLabel.text = user.bio
             self?.headerView.profileAvatarImageView.sd_setImage(with: URL(string: user.avatarPath))
+            self?.headerView.joinDateLabel.text = "Joined \(user.createdOn)"
         }
         .store(in: &subscriptions)
     }

@@ -36,7 +36,7 @@ class ProfileTableViewHeader: UIView { //script ProfileHeader
     
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(red: 29/255, green:  161/255, blue: 242/255, alpha:  1)
+        view.backgroundColor = .twitterBlueColor
         return view
     }()
     
@@ -108,7 +108,7 @@ class ProfileTableViewHeader: UIView { //script ProfileHeader
         return label
     }()
     
-    private let joinDateLabel : UILabel = {
+    var joinDateLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .secondaryLabel
