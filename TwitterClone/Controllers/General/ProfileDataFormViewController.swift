@@ -246,6 +246,7 @@ class ProfileDataFormViewController: UIViewController {
         }
         
         func textViewDidEndEditing(_ textView: UITextView) {
+            scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             if textView.text.isEmpty {
                 textView.text = "Tell the world about yourself"
                 textView.textColor = .gray
