@@ -14,8 +14,6 @@ class DatabaseManager {
     let usersPath: String = "users"
     let tweetsPath: String = "tweets"
     
-    
-    
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> { //add userdata to firebasedatabase
         let twitterUser = TwitterUser(from: user)
         do {
@@ -82,7 +80,42 @@ class DatabaseManager {
         }
         .eraseToAnyPublisher()
     }
-    
-    
+    func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error> {
+        var data: [String: Any] = [:]
+        
+        do {
+            // Encode tweet to JSON data
+            let jsonData = try JSONEncoder().encode(tweet)
+            
+            // Transform JSON data to dictionary
+            guard let jsonDictionary = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any] else {
+                throw NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert JSON to dictionary"])
+            }
+            
+            // Assign the dictionary to the data variable
+            data = jsonDictionary
+            
+        } catch {
+            // Error handling
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+        
+        // Return a Future Publisher to perform the database operation
+        return Future<Bool, Error> { [weak self] promise in
+            guard let self = self else {
+                promise(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Self is nil"])))
+                return
+            }
+            
+            // Save the tweet data to the database
+            self.db.collection(self.tweetsPath).document(tweet.id).setData(data) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(true))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 }
-

@@ -21,6 +21,7 @@
 		D8125C042C50CABF0091CFBD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8125C032C50CABF0091CFBD /* AuthManager.swift */; };
 		D820DC582C609F7200912884 /* ProfileDataFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820DC572C609F7200912884 /* ProfileDataFormViewController.swift */; };
 		D820DC5A2C60A17F00912884 /* ProfileDataFormViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D820DC592C60A17F00912884 /* ProfileDataFormViewViewModel.swift */; };
+		D822ADF12C75AF4B00FC822E /* TweetComposeViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D822ADF02C75AF4B00FC822E /* TweetComposeViewViewModel.swift */; };
 		D83D62352C536AFA00F26754 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BE82C4CC8150091CFBD /* FirebaseAuth */; };
 		D83D62362C536AFA00F26754 /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BEA2C4CC8150091CFBD /* FirebaseAuthCombine-Community */; };
 		D83D62372C536AFA00F26754 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D8125BEC2C4CC8150091CFBD /* FirebaseDatabase */; };
@@ -81,6 +82,7 @@
 		D8125C032C50CABF0091CFBD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		D820DC572C609F7200912884 /* ProfileDataFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewController.swift; sourceTree = "<group>"; };
 		D820DC592C60A17F00912884 /* ProfileDataFormViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataFormViewViewModel.swift; sourceTree = "<group>"; };
+		D822ADF02C75AF4B00FC822E /* TweetComposeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewViewModel.swift; sourceTree = "<group>"; };
 		D85312BB2C5372300048BB18 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D853F4D72C01C4CE003C9459 /* ProfileTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewHeader.swift; sourceTree = "<group>"; };
 		D87B473A2C5CC8B5007CC100 /* HomeViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewViewModel.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				D8125C002C4E359D0091CFBD /* AuthenticationViewViewModel.swift */,
 				D87B473A2C5CC8B5007CC100 /* HomeViewViewModel.swift */,
 				D820DC592C60A17F00912884 /* ProfileDataFormViewViewModel.swift */,
+				D822ADF02C75AF4B00FC822E /* TweetComposeViewViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				D809DEA62C74824100821787 /* Tweet.swift in Sources */,
 				D8C3DF372BF9EAFE004BEE85 /* SceneDelegate.swift in Sources */,
 				D8CF14B52C521F6B006CEC8C /* DatabaseManager.swift in Sources */,
+				D822ADF12C75AF4B00FC822E /* TweetComposeViewViewModel.swift in Sources */,
 				D8C3DF672BFA3EFE004BEE85 /* HomeViewController.swift in Sources */,
 				D8125C012C4E359D0091CFBD /* AuthenticationViewViewModel.swift in Sources */,
 				D809DEA22C73338400821787 /* Extension+UIColor.swift in Sources */,
