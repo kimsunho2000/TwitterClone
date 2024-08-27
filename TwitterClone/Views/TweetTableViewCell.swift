@@ -29,14 +29,12 @@ class TweetTableViewCell: UITableViewCell {
         imageView.layer.cornerRadius = 25 //make image view circular
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
-        imageView.image = UIImage(systemName: "person")
         imageView.backgroundColor = .red
         return imageView
     }()
     
     private let displayNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Kim sun ho"
         label.font = .systemFont(ofSize: 18,weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -44,7 +42,6 @@ class TweetTableViewCell: UITableViewCell {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "123"
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -53,7 +50,6 @@ class TweetTableViewCell: UITableViewCell {
     private let tweetTextContentLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "This is my Mockup tweet"
         label.numberOfLines = 0
         return label
     }()
@@ -129,6 +125,12 @@ class TweetTableViewCell: UITableViewCell {
         likeButton.addTarget(self, action: #selector(didTapLike), for: .touchUpInside)
     }
     
+    func configureTweets(with displayName: String,username: String, tweetTextContent: String, avatarPath: String) { //set tweet data
+        displayNameLabel.text = displayName
+        usernameLabel.text = "@ \(username)"
+        tweetTextContentLabel.text = tweetTextContent
+        avatarImageView.sd_setImage(with: URL(string: avatarPath))
+    }
     
     private func configureConstraints() { /*configure the constraints of the ui image,
         custom the layout fully,managed by array*/

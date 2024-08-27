@@ -118,4 +118,45 @@ class DatabaseManager {
         }
         .eraseToAnyPublisher()
     }
+    
+    func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], Error> {
+        Future<[Tweet], Error> { promise in
+            // Firestore 쿼리 실행
+            self.db.collection(self.tweetsPath)
+                .whereField("author.id", isEqualTo: forUserID)
+                .getDocuments { querySnapshot, error in
+                    // Firestore 쿼리 실패 시 에러 반환
+                    if let error = error {
+                        promise(.failure(error))
+                        return
+                    }
+
+                    // 쿼리 결과가 없는 경우 에러 반환
+                    guard let documents = querySnapshot?.documents else {
+                        promise(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No documents found"])))
+                        return
+                    }
+
+                    // JSONDecoder를 사용하여 문서 데이터를 Tweet 객체로 변환
+                    let decoder = JSONDecoder()
+                    let tweets: [Tweet] = documents.compactMap { document in
+                        do {
+                            // Firestore 문서 데이터를 JSON으로 변환
+                            let data = try JSONSerialization.data(withJSONObject: document.data(), options: [])
+                            // JSON 데이터를 Tweet 객체로 디코딩
+                            let tweet = try decoder.decode(Tweet.self, from: data)
+                            return tweet
+                        } catch {
+                            print("Failed to decode document: \(error)")
+                            return nil
+                        }
+                    }
+
+                    // 성공적으로 트윗 배열 반환
+                    promise(.success(tweets))
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+
 }

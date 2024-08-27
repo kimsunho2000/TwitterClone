@@ -42,7 +42,7 @@ final class TweetComposeViewViewModel: ObservableObject {
     
     func dispatchTweet() {
         guard let user = user else { return }
-        let tweet = Tweet(author: user, tweetContent: tweetContent, likesCount: 0, likers: [], isReply: false
+        let tweet = Tweet(author: user, authorID: user.id, tweetContent: tweetContent, likesCount: 0, likers: [], isReply: false
         , parentReference: nil)
         DatabaseManager.shared.collectionTweets(dispatch: tweet)
             .sink {

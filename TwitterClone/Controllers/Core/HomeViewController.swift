@@ -106,7 +106,7 @@ class HomeViewController: UIViewController {
         present(vc, animated: true)
     }
     
-    func bindViews() { //if view did't binded call ProfiledateFormViewControllrer()
+    func bindViews() { //if view did't binded,it will call ProfiledateFormViewControllrer()
         viewModel.$user.sink {
             [weak self] user in
             guard let user = user else {
@@ -117,6 +117,12 @@ class HomeViewController: UIViewController {
             }
         }
         .store(in: &subscriptions)
+        
+        viewModel.$tweets.sink { [weak self] _ in //refresh table view
+            DispatchQueue.main.async {
+                self?.timelineTableView.reloadData()
+            }
+        } .store(in: &subscriptions)
     }
     
     private func configureConstraints() {
@@ -133,7 +139,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { //add tableview at Homeview
-        return 10
+        return viewModel.tweets.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,6 +147,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         else {
             return UITableViewCell()
         }
+        let tweetModel = viewModel.tweets[indexPath.row] //bind datas in tableViewCell
+        cell.configureTweets(with: tweetModel.author.displayName,
+                             username: tweetModel.author.username,
+                             tweetTextContent: tweetModel.tweetContent,
+                             avatarPath: tweetModel.author.avatarPath)
         cell.delegate = self
         return cell
     }
