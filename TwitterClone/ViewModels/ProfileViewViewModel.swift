@@ -13,6 +13,7 @@ final class ProfileViewViewModel: ObservableObject {
     
     @Published var user: TwitterUser?
     @Published var error: String?
+    @Published var tweets: [Tweet] = []
     
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -26,7 +27,23 @@ final class ProfileViewViewModel: ObservableObject {
                 }
             } receiveValue: { [weak self] user in
                 self?.user = user
+                self?.fetchUserTweets()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    func fetchUserTweets() { //fetch users tweets
+        guard let user = user else { return }
+        DatabaseManager.shared.collectionTweets(retreiveTweets: user.id)
+            .sink { completion in
+                if case .failure(let error) = completion {
+                    print(error.localizedDescription)
+                }
+            }   receiveValue: { [weak self] tweets in
+                self?.tweets = tweets
             }
             .store(in: &subscriptions)
     }
 }
+
+
