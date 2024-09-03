@@ -148,7 +148,8 @@ class TweetTableViewCell: UITableViewCell {
         let usernameLabelConstraints = [
             usernameLabel.leadingAnchor.constraint(equalTo: displayNameLabel.trailingAnchor, constant: 10),
             usernameLabel.centerYAnchor.constraint(equalTo: displayNameLabel.centerYAnchor)
-            ]
+        ]
+        
         let tweetTextContentLabelConstraints = [
             tweetTextContentLabel.leadingAnchor.constraint(equalTo: displayNameLabel.leadingAnchor),
             tweetTextContentLabel.topAnchor.constraint(equalTo: displayNameLabel.bottomAnchor,constant: 10),

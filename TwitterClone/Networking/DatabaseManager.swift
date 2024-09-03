@@ -119,6 +119,38 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
+    func collectionUsers(search query: String) -> AnyPublisher<[TwitterUser], Error> {
+        Future<[TwitterUser], Error> { promise in
+            self.db.collection(self.usersPath)
+                .whereField("username", isEqualTo: query)
+                .getDocuments { querySnapshot, Error in
+                    if let Error = Error {
+                        promise(.failure(Error))
+                        return
+                    }
+                    guard let documents = querySnapshot?.documents else {
+                        promise(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No documents found"])))
+                        return
+                    }
+                    let decoder = JSONDecoder()
+                    let twitterUsers: [TwitterUser] = documents.compactMap { document in
+                        do {
+                            // Firestore 문서 데이터를 JSON으로 변환
+                            let data = try JSONSerialization.data(withJSONObject: document.data(), options: [])
+                            // JSON 데이터를 Tweet 객체로 디코딩
+                            let twitterUser = try decoder.decode(TwitterUser.self, from: data)
+                            return twitterUser
+                        } catch {
+                            print("Failed to decode document: \(error)")
+                            return nil
+                        }
+                    }
+                    promise(.success(twitterUsers))
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
     func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], Error> {
         Future<[Tweet], Error> { promise in
             // Firestore 쿼리 실행
@@ -130,13 +162,13 @@ class DatabaseManager {
                         promise(.failure(error))
                         return
                     }
-
+                    
                     // 쿼리 결과가 없는 경우 에러 반환
                     guard let documents = querySnapshot?.documents else {
                         promise(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No documents found"])))
                         return
                     }
-
+                    
                     // JSONDecoder를 사용하여 문서 데이터를 Tweet 객체로 변환
                     let decoder = JSONDecoder()
                     let tweets: [Tweet] = documents.compactMap { document in
@@ -151,12 +183,11 @@ class DatabaseManager {
                             return nil
                         }
                     }
-
+                    
                     // 성공적으로 트윗 배열 반환
                     promise(.success(tweets))
                 }
         }
         .eraseToAnyPublisher()
     }
-
 }
