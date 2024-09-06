@@ -18,7 +18,7 @@ final class HomeViewViewModel: ObservableObject {
     private var subscriptions: Set<AnyCancellable> = []
     
     
-    func retreiveUser() {  //call collectionUsers(retrieve: id),search current users data in firebase database.
+    func retreiveUser() {  //call collectionUsers(retreive: id),search current users data in firebase database.
         guard let id = Auth.auth().currentUser?.uid else { return }
         DatabaseManager.shared.collectionUsers(retreive: id)
             .handleEvents(receiveOutput: { [weak self] user in

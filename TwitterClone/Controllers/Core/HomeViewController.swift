@@ -47,8 +47,9 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func didTapProfile() {
-        let viewModel = ProfileViewViewModel()
-        let vc = ProfileViewController(viewModel: viewModel)
+        guard let user = viewModel.user else { return }
+        let profileViewModel = ProfileViewViewModel(user: user)
+        let vc = ProfileViewController(viewModel: profileViewModel)
         navigationController?.pushViewController(vc, animated: true)    }
     
     private let timelineTableView: UITableView = {

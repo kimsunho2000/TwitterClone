@@ -24,9 +24,9 @@ class TweetTableViewCell: UITableViewCell {
     
     private let avatarImageView: UIImageView = { //avatar of user
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false //unactivate auto layout
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 25 //make image view circular
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 25
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.backgroundColor = .red

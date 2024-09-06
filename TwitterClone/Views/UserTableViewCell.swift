@@ -13,9 +13,9 @@ class UserTableViewCell: UITableViewCell {
     
     private let avatarImageView: UIImageView = { //avatar of user
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false //unactivate auto layout
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 25 //make image view circular
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 25
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.backgroundColor = .red
@@ -31,7 +31,8 @@ class UserTableViewCell: UITableViewCell {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.textColor = .secondaryLabel
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -47,7 +48,7 @@ class UserTableViewCell: UITableViewCell {
     private func configureConstraints() {
         let avatarImageViewConstraints = [
             avatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 20),
-            avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 14),
+            avatarImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             avatarImageView.heightAnchor.constraint(equalToConstant: 50),
             avatarImageView.widthAnchor.constraint(equalToConstant: 50)
         ]
@@ -69,7 +70,7 @@ class UserTableViewCell: UITableViewCell {
     func configure(with user: TwitterUser) {
         avatarImageView.sd_setImage(with: URL(string: user.avatarPath))
         displayNameLabel.text = user.displayName
-        usernameLabel.text = user.username
+        usernameLabel.text = "@\(user.username)"
     }
     
     required init?(coder: NSCoder) {
@@ -78,8 +79,3 @@ class UserTableViewCell: UITableViewCell {
     
 }
 
-extension SearchResultsViewController: UITableViewDelegate { //add extension
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-}

@@ -15,6 +15,7 @@ class SearchResultsViewController: UIViewController {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        table.rowHeight = 60 //instead of using extension func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath)
         return table
     }()
     
@@ -23,7 +24,7 @@ class SearchResultsViewController: UIViewController {
         view.addSubview(searchResultsTableView)
         configureConstraints()
         searchResultsTableView.dataSource = self
-        
+        searchResultsTableView.delegate = self
     }
     
     func update(users: [TwitterUser]) {
@@ -57,5 +58,15 @@ extension SearchResultsViewController: UITableViewDataSource {
         let user = users[indexPath.row]
         cell.configure(with: user)
         return cell
+    }
+}
+
+extension SearchResultsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let user = users[indexPath.row]
+        let profileViewModel = ProfileViewViewModel(user: user)
+        let vc = ProfileViewController(viewModel: profileViewModel)
+        present(vc, animated: true)
     }
 }

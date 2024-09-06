@@ -56,7 +56,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         configureConstraints()
         bindViews()
-        viewModel.retreiveUser()
+        viewModel.fetchUserTweets()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +73,6 @@ class ProfileViewController: UIViewController {
         .store(in: &subscriptions)
         
         viewModel.$user.sink { [weak self] user in
-            guard let user = user else { return }
             self?.headerView.displayNameLabel.text = user.displayName
             self?.headerView.usernameLabel.text = "@\(user.username)"
             self?.headerView.followersCountLabel.text = "\(user.followersCount)"
@@ -123,7 +122,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource { //
                              username: tweet.author.username,
                              tweetTextContent: tweet.tweetContent,
                              avatarPath: tweet.author.avatarPath)
-        
         return cell
     }
     
