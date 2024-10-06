@@ -13,6 +13,7 @@ class DatabaseManager {
     let db = Firestore.firestore()
     let usersPath: String = "users"
     let tweetsPath: String = "tweets"
+    let followingPath: String = "followings"
     
     func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> { //add userdata to firebasedatabase
         let twitterUser = TwitterUser(from: user)
@@ -190,4 +191,98 @@ class DatabaseManager {
         }
         .eraseToAnyPublisher()
     }
-}
+    
+    func collectionFollowings(isFollower: String, following: String) -> Future<Bool, Error> {
+        return Future { promise in
+            self.db.collection(self.followingPath)
+                .whereField("follower", isEqualTo: isFollower)
+                .whereField("following", isEqualTo: following)
+                .getDocuments { (snapshot, error) in
+                    if let error = error {
+                        // 에러가 발생하면 promise에 에러를 전달
+                        promise(.failure(error))
+                    } else {
+                        // 팔로워수를 확인하여 0이 아니면 true, 0이면 false 반환
+                        let isFollowing = snapshot?.count != 0
+                        promise(.success(isFollowing))
+                    }
+                }
+        }
+    }
+    
+    func collectionFollowings(follower: String, following: String) -> AnyPublisher<Bool, Error> {
+        return Future { promise in
+            self.db.collection(self.followingPath).document().setData([
+                "follower": follower,
+                "following": following
+            ]) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(true))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func collectionFollowings(delete follower: String, following: String) -> AnyPublisher<Bool, Error> {
+        return Future { promise in
+            self.db.collection(self.followingPath)
+                .whereField("follower", isEqualTo: follower)
+                .whereField("following", isEqualTo: following)
+                .getDocuments { (snapshot, error) in
+                    if let error = error {
+                        // 에러가 발생하면 promise에 에러를 전달
+                        promise(.failure(error))
+                    } else if let documents = snapshot?.documents, !documents.isEmpty {
+                        let batch = self.db.batch() // Firestore 배치 작업을 시작합니다.
+                        
+                        // 문서들에 대해 필드를 삭제하는 작업 수행
+                        for document in documents {
+                            batch.updateData([
+                                "follower": FieldValue.delete(),
+                                "following": FieldValue.delete()
+                            ], forDocument: document.reference)
+                        }
+                        
+                        // 배치 작업을 커밋하여 필드 삭제 처리
+                        batch.commit { batchError in
+                            if let batchError = batchError {
+                                promise(.failure(batchError))
+                            } else {
+                                // 배치 작업 완료 후 문서에 남아있는 데이터 확인
+                                for document in documents {
+                                    document.reference.getDocument { (updatedDocument, error) in
+                                        if let updatedDocument = updatedDocument, updatedDocument.exists {
+                                            // 남은 데이터가 없으면 문서 삭제
+                                            if updatedDocument.data()?.isEmpty == true {
+                                                document.reference.delete { deleteError in
+                                                    if let deleteError = deleteError {
+                                                        promise(.failure(deleteError))
+                                                    } else {
+                                                        // 삭제가 성공하면 true 반환
+                                                        promise(.success(true))
+                                                    }
+                                                }
+                                            } else {
+                                                // 문서에 남아있는 데이터가 있으면 true 반환
+                                                promise(.success(true))
+                                            }
+                                        } else if let error = error {
+                                            promise(.failure(error))
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        // 삭제할 문서가 없는 경우
+                        promise(.success(false)) // 아무 문서도 삭제되지 않음
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    }
+

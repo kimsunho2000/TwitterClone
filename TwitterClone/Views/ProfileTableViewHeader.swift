@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 class ProfileTableViewHeader: UIView { //script ProfileHeader
+    
+    private var currentFollowState: ProfileFollowingState = .personal
+    var followButtonActionPublisher: PassthroughSubject<ProfileFollowingState, Never> = PassthroughSubject()
     
     private enum SectionTabs : String { //set index of SectionTabs
         case tweets = "Tweets"
@@ -196,8 +200,15 @@ class ProfileTableViewHeader: UIView { //script ProfileHeader
         addSubview(followButton)
         configureConstraints()
         configureStackButton()
-        configureFollowButtonAsUnFollowed()
-
+        configureFollowButtonAction()
+    }
+    
+    private func configureFollowButtonAction() {
+        followButton.addTarget(self, action: #selector(didTapFollowButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapFollowButton() {
+        followButtonActionPublisher.send(currentFollowState)
     }
     
     private func configureStackButton() {
@@ -214,20 +225,28 @@ class ProfileTableViewHeader: UIView { //script ProfileHeader
         }
     }
     
-    private func configureFollowButtonAsFollowed() { //add actionListener to followbutton
+    func configureFollowButtonAsUnFollowed() { //add actionListener to followbutton
         followButton.setTitle("Unfollow", for: .normal)
         followButton.backgroundColor = .systemBackground
         followButton.layer.borderWidth = 2
         followButton.setTitleColor(.twitterBlueColor, for: .normal)
         followButton.layer.borderColor = UIColor.twitterBlueColor.cgColor
+        followButton.isHidden = false
+        currentFollowState = .userIsFollowed
     }
     
-    private func configureFollowButtonAsUnFollowed() {
+    func configureFollowButtonAsFollowed() {
         followButton.setTitle("Follow", for: .normal)
         followButton.backgroundColor = .twitterBlueColor
         followButton.setTitleColor(.white, for: .normal)
         followButton.layer.borderColor = UIColor.clear.cgColor
-        
+        followButton.isHidden = false
+        currentFollowState = .userIsUnfollowed
+    }
+    
+    func configureAsPersonal() {
+        followButton.isHidden = true
+        currentFollowState = .personal
     }
     
     @objc private func didTapTab(_ sender: UIButton) {

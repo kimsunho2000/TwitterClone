@@ -82,8 +82,34 @@ class ProfileViewController: UIViewController {
             self?.headerView.joinDateLabel.text = "Joined \(user.createdOn)"
         }
         .store(in: &subscriptions)
+        
+    viewModel.$currentFollowingState.sink { [weak self] state in
+        switch state {
+        case .personal:
+            self?.headerView.configureAsPersonal()
+            return
+        case .userIsFollowed:
+            self?.headerView.configureFollowButtonAsUnFollowed()
+            return
+        case .userIsUnfollowed:
+            self?.headerView.configureFollowButtonAsFollowed()
+            return
+        }
     }
-    
+    .store(in: &subscriptions)
+        
+        headerView.followButtonActionPublisher.sink { [weak self] state in
+            switch state {
+            case .userIsFollowed:
+                self?.viewModel.unFollow()
+            case .userIsUnfollowed:
+                self?.viewModel.follow()
+            case .personal:
+                return
+            }
+        }
+        .store(in: &subscriptions)
+}
     private func configureConstraints() { //set layout constraints
         
         let profileTableViewConstraints = [
