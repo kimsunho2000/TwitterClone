@@ -81,6 +81,7 @@ class DatabaseManager {
         }
         .eraseToAnyPublisher()
     }
+    
     func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error> {
         var data: [String: Any] = [:]
         
