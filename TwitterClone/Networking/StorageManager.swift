@@ -19,7 +19,7 @@ final class StorageManager {
     
     let storage = Storage.storage()
     
-    func getDownloadURL(for id: String?) -> AnyPublisher<URL, Error> {
+    func getDownloadURL(for id: String?) -> AnyPublisher<URL, any Error> {
         guard let id = id else {
             return Fail(error: FirestorageError.invalidImageID)
                 .eraseToAnyPublisher()
@@ -31,7 +31,7 @@ final class StorageManager {
     }
     
     
-    func uploadProfilePhoto(with randomID: String, image: Data, metaData: StorageMetadata) -> AnyPublisher<StorageMetadata, Error> {
+    func uploadProfilePhoto(with randomID: String, image: Data, metaData: StorageMetadata) -> AnyPublisher<StorageMetadata, any Error> {
         
         storage
             .reference()

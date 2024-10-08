@@ -15,7 +15,7 @@ class DatabaseManager {
     let tweetsPath: String = "tweets"
     let followingPath: String = "followings"
     
-    func collectionUsers(add user: User) -> AnyPublisher<Bool, Error> { //add userdata to firebasedatabase
+    func collectionUsers(add user: User) -> AnyPublisher<Bool, any Error> { //add userdata to firebasedatabase
         let twitterUser = TwitterUser(from: user)
         do {
             //Encode Twitteruser to JSONdata
@@ -27,7 +27,7 @@ class DatabaseManager {
             }
             
             //add data to Firestore
-            return Future<Bool, Error> { promise in
+            return Future<Bool, any Error> { promise in
                 self.db.collection(self.usersPath).document(twitterUser.id).setData(data) { error in
                     if let error = error {
                         promise(.failure(error))
@@ -43,8 +43,8 @@ class DatabaseManager {
         }
     }
     
-    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, Error> { //search UID in firebasedatabse and transform data to TwitterUser type
-        Future<TwitterUser, Error> { promise in
+    func collectionUsers(retreive id: String) -> AnyPublisher<TwitterUser, any Error> { //search UID in firebasedatbase and transform data to TwitterUser type
+        Future<TwitterUser, any Error> { promise in
             self.db.collection(self.usersPath).document(id).getDocument { document, error in
                 if let error = error {
                     promise(.failure(error))
@@ -66,8 +66,8 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
-    func collectionUsers(updateFields: [String: Any], for id: String) -> AnyPublisher<Bool, Error> {
-        Future<Bool, Error> {
+    func collectionUsers(updateFields: [String: Any], for id: String) -> AnyPublisher<Bool, any Error> {
+        Future<Bool, any Error> {
             promise in
             self.db.collection(self.usersPath).document(id).updateData(updateFields) {
                 error in
@@ -82,7 +82,7 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
-    func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, Error> {
+    func collectionTweets(dispatch tweet: Tweet) -> AnyPublisher<Bool, any Error> {
         var data: [String: Any] = [:]
         
         do {
@@ -103,7 +103,7 @@ class DatabaseManager {
         }
         
         // Return a Future Publisher to perform the database operation
-        return Future<Bool, Error> { [weak self] promise in
+        return Future<Bool, any Error> { [weak self] promise in
             guard let self = self else {
                 promise(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Self is nil"])))
                 return
@@ -121,8 +121,8 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
-    func collectionUsers(search query: String) -> AnyPublisher<[TwitterUser], Error> {
-        Future<[TwitterUser], Error> { promise in
+    func collectionUsers(search query: String) -> AnyPublisher<[TwitterUser], any Error> {
+        Future<[TwitterUser], any Error> { promise in
             self.db.collection(self.usersPath)
                 .whereField("username", isEqualTo: query)
                 .getDocuments { querySnapshot, Error in
@@ -153,8 +153,8 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
-    func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], Error> {
-        Future<[Tweet], Error> { promise in
+    func collectionTweets(retreiveTweets forUserID: String) -> AnyPublisher<[Tweet], any Error> {
+        Future<[Tweet], any Error> { promise in
             // Firestore 쿼리 실행
             self.db.collection(self.tweetsPath)
                 .whereField("author.id", isEqualTo: forUserID)
@@ -193,7 +193,7 @@ class DatabaseManager {
         .eraseToAnyPublisher()
     }
     
-    func collectionFollowings(isFollower: String, following: String) -> Future<Bool, Error> {
+    func collectionFollowings(isFollower: String, following: String) -> Future<Bool, any Error> {
         return Future { promise in
             self.db.collection(self.followingPath)
                 .whereField("follower", isEqualTo: isFollower)
@@ -211,24 +211,68 @@ class DatabaseManager {
         }
     }
     
-    func collectionFollowings(follower: String, following: String) -> AnyPublisher<Bool, Error> {
+    func collectionFollowings(follower: String, following: String) -> AnyPublisher<Bool, any Error> {
         return Future { promise in
-            self.db.collection(self.followingPath).document().setData([
+            let db = self.db
+
+            // 팔로잉 관계 데이터 추가
+            let followingData = [
                 "follower": follower,
                 "following": following
-            ]) { error in
+            ]
+
+            //팔로잉 관계 추가
+            db.collection(self.followingPath).document().setData(followingData) { error in
                 if let error = error {
                     promise(.failure(error))
-                } else {
-                    promise(.success(true))
+                    return
+                }
+                //팔로잉 한 사용자의 followingCount 증가
+                db.collection(self.usersPath).document(follower).updateData([
+                    "followingCount": FieldValue.increment(Int64(1))
+                ]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                        return
+                    }
+
+                    //팔로잉 당한 사용자의 followerCount 증가
+                    db.collection(self.usersPath).document(following).updateData([
+                        "followersCount": FieldValue.increment(Int64(1))
+                    ]) { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        } else {
+                            promise(.success(true))
+                        }
+                    }
                 }
             }
         }
         .eraseToAnyPublisher()
     }
     
-    func collectionFollowings(delete follower: String, following: String) -> AnyPublisher<Bool, Error> {
+    func collectionFollowings(delete follower: String, following: String) -> AnyPublisher<Bool, any Error> {
         return Future { promise in
+            
+            self.db.collection(self.usersPath).document(follower).updateData([ //팔로잉 한 사용자의 followingCount 감소
+                "followingCount": FieldValue.increment(Int64(-1))
+            ]) { error in
+                if let error = error {
+                    promise(.failure(error))
+                    return
+                }
+                self.db.collection(self.usersPath).document(following).updateData([ //팔로잉 당한 사용자의 followerCount 감소
+                    "followersCount": FieldValue.increment(Int64(-1))
+                ]) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(true))
+                    }
+                }
+            }
+            
             self.db.collection(self.followingPath)
                 .whereField("follower", isEqualTo: follower)
                 .whereField("following", isEqualTo: following)
