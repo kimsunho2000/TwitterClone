@@ -17,7 +17,6 @@ protocol TweetTableViewCellDelegate: AnyObject { //declare tweet actions protoco
 class TweetTableViewCell: UITableViewCell {
     
     static let identifier = "TweetTableViewCell" //Using for regist the cell in table view
-    
     weak var delegate: (any TweetTableViewCellDelegate)? //declare delegate
     
     private let actionSpacing: CGFloat = 60
